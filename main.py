@@ -37,7 +37,7 @@ PRICING = {
         "cache_read": 1.5,
         "cache_write": 18.75,
     },
-    "claude-sonnet-4-6-20250514": {
+    "claude-sonnet-4-6": {
         "input": 3.0,
         "output": 15.0,
         "cache_read": 0.30,
@@ -93,7 +93,7 @@ def _current_month() -> str:
 
 
 def _calculate_cost_gbp(model: str, usage: anthropic.types.Usage) -> float:
-    prices = PRICING.get(model, PRICING["claude-sonnet-4-6-20250514"])
+    prices = PRICING.get(model, PRICING["claude-sonnet-4-6"])
     input_cost = (usage.input_tokens / 1_000_000) * prices["input"]
     output_cost = (usage.output_tokens / 1_000_000) * prices["output"]
 
@@ -382,7 +382,7 @@ async def chat(
     user_id = verify_auth(authorization)
     spent = check_budget(user_id)
 
-    model = "claude-sonnet-4-6-20250514"
+    model = "claude-sonnet-4-6"
 
     # --- Tiered context with cache breakpoints ---
     # Prefer split tiers; fall back to merged userContext for older clients.
@@ -477,7 +477,7 @@ async def analyze_plateau(
     user_id = verify_auth(authorization)
     spent = check_budget(user_id)
 
-    model = "claude-sonnet-4-6-20250514"
+    model = "claude-sonnet-4-6"
 
     user_data: dict = {
         "liftName": req.liftName,
